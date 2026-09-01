@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thomas Ayres — Videographer & Visual Storyteller</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #070B12;
+    --bg-card: rgba(18, 24, 38, 0.65);
+    --border: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(99, 102, 241, 0.5);
+    --text: #F8FAFC;
+    --text-muted: #94A3B8;
+    --accent: #6366F1;
+    --accent-glow: rgba(99, 102, 241, 0.3);
+    --radius: 12px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Syne', sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* Top Contact Bar */
+  .top-bar {
+    background: rgba(15, 23, 42, 0.9);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.85rem;
+    padding: 8px 0;
+    color: var(--text-muted);
+  }
+  .top-bar-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .top-contact-info {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .top-contact-info a:hover { color: var(--text); }
+  .top-contact-info span { display: flex; align-items: center; gap: 6px; }
+
+  /* Navigation */
+  header.nav {
+    position: sticky; top: 0; z-index: 200;
+    background: rgba(7, 11, 18, 0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 70px;
+  }
+  .nav-brand { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.35rem; }
+  .nav-brand span { color: var(--accent); }
+  
+  .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+  .nav-links a {
+    color: var(--text-muted); font-size: 0.92rem; font-weight: 500; transition: var(--transition);
+  }
+  .nav-links a:hover { color: var(--text); }
+  
+  .nav-toggle {
+    display: none; background: none; border: 1px solid var(--border);
+    color: var(--text); width: 44px; height: 44px; border-radius: var(--radius);
+    font-size: 1.2rem; cursor: pointer;
+  }
+
+  /* Animated Hero Background Graphics & Layout */
+  .hero {
+    position: relative; 
+    padding: 80px 0 90px;
+    overflow: hidden;
+  }
+  
+  .hero-graphic-bg {
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    background: 
+      radial-gradient(circle at 50% 20%, rgba(99, 102, 241, 0.25) 0%, transparent 50%),
+      radial-gradient(circle at 80% 60%, rgba(129, 140, 248, 0.12) 0%, transparent 40%),
+      radial-gradient(circle at 20% 70%, rgba(49, 151, 149, 0.15) 0%, transparent 40%);
+  }
+
+  .hero-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(var(--border) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.25;
+    mask-image: radial-gradient(circle at 50% 40%, #000 30%, transparent 80%);
+    z-index: 0;
+  }
+
+  .hero-grid-container {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 16px; background: rgba(99, 102, 241, 0.12);
+    border: 1px solid rgba(99, 102, 241, 0.35); border-radius: 100px;
+    color: #818cf8; font-size: 0.85rem; font-weight: 600; margin-bottom: 24px;
+    backdrop-filter: blur(8px);
+  }
+  .hero h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.05; margin-bottom: 24px; }
+  .hero p { max-width: 580px; color: var(--text-muted); font-size: 1.1rem; margin-bottom: 32px; }
+  .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  /* Hero Graphic Showcase (Camera & Editing Imagery) */
+  .hero-visual-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    position: relative;
+  }
+  .hero-visual-card {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    transition: var(--transition);
+  }
+  .hero-visual-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-hover);
+  }
+  .hero-visual-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+  .hero-visual-card-tag {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    padding: 6px 10px;
+    background: rgba(7, 11, 18, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 28px; border-radius: 100px; font-weight: 600;
+    font-size: 0.95rem; cursor: pointer; transition: var(--transition); border: none;
+  }
+  .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 4px 20px var(--accent-glow); }
+  .btn-primary:hover { background: #4f46e5; transform: translateY(-2px); }
+  .btn-secondary { background: rgba(255, 255, 255, 0.05); color: var(--text); border: 1px solid var(--border); }
+  .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); transform: translateY(-2px); }
+
+  /* Sections */
+  section.block { padding: 90px 0; border-bottom: 1px solid var(--border); }
+  .section-head { margin-bottom: 48px; }
+  .section-head h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 12px; }
+  .section-head p { color: var(--text-muted); max-width: 500px; }
+
+  /* Featured Reel Box */
+  .featured-reel {
+    display: grid; grid-template-columns: 1.5fr 1fr;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden; margin-bottom: 60px;
+    backdrop-filter: blur(12px);
+  }
+  .featured-media { position: relative; aspect-ratio: 16/9; cursor: pointer; overflow: hidden; }
+  .featured-media img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+  .featured-media:hover img { transform: scale(1.03); }
+  .featured-info { padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+  .featured-info h3 { font-size: 2rem; margin-bottom: 16px; }
+  .featured-info p { color: var(--text-muted); margin-bottom: 24px; }
+
+  /* Video Grid & Filter Tabs */
+  .filter-tabs { display: flex; gap: 12px; margin-bottom: 32px; flex-wrap: wrap; }
+  .tab-btn {
+    padding: 8px 18px; border-radius: 100px; background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border); color: var(--text-muted); cursor: pointer;
+    font-size: 0.9rem; transition: var(--transition);
+  }
+  .tab-btn.active, .tab-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+  .video-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden; transition: var(--transition);
+  }
+  .video-card:hover { transform: translateY(-4px); border-color: var(--border-hover); }
+  .card-media { position: relative; aspect-ratio: 16/9; cursor: pointer; overflow: hidden; }
+  .card-media img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+  .card-media:hover img { transform: scale(1.05); }
+  
+  .play-overlay {
+    position: absolute; inset: 0; background: rgba(0, 0, 0, 0.35);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: var(--transition);
+  }
+  .card-media:hover .play-overlay { opacity: 1; }
+  .play-icon {
+    width: 52px; height: 52px; background: var(--accent); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; color: #fff;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  }
+
+  .card-body { padding: 20px; }
+  .card-body h4 { font-size: 1.05rem; font-weight: 600; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+  /* Gear Cards */
+  .gear-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+  .gear-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px; display: flex; gap: 16px; align-items: center;
+    transition: var(--transition);
+  }
+  .gear-card:hover { border-color: var(--border-hover); background: rgba(255,255,255,0.03); }
+  .gear-card img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
+  .gear-info h4 { font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .gear-info span { color: var(--text-muted); font-size: 0.8rem; }
+
+  /* About & Contact */
+  .about-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 48px; align-items: center; }
+  .about-text p { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 20px; }
+  .about-profile img { border-radius: var(--radius); border: 1px solid var(--border); }
+
+  .contact-list { list-style: none; display: grid; gap: 16px; }
+  .contact-item {
+    display: flex; align-items: center; gap: 16px; padding: 20px;
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+  }
+  .contact-item svg { width: 24px; height: 24px; color: var(--accent); }
+
+  /* Modal Player */
+  .modal {
+    position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px); z-index: 1000; display: none;
+    align-items: center; justify-content: center; padding: 24px;
+  }
+  .modal.open { display: flex; }
+  .modal-content { position: relative; width: 100%; max-width: 900px; aspect-ratio: 16/9; }
+  .modal-close {
+    position: absolute; top: -48px; right: 0; background: none; border: none;
+    color: #fff; font-size: 2rem; cursor: pointer;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 900px) {
+    .hero-grid-container { grid-template-columns: 1fr; }
+    .hero-visual-cards { margin-top: 24px; }
+    .featured-reel, .about-grid { grid-template-columns: 1fr; }
+    .nav-links {
+      position: fixed; top: 70px; left: 0; right: 0; background: var(--bg);
+      flex-direction: column; padding: 24px; border-bottom: 1px solid var(--border);
+      display: none;
+    }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: block; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP UTILITY CONTACT BAR -->
+<div class="top-bar">
+  <div class="wrap top-bar-inner">
+    <div class="top-contact-info">
+      <span>📍 Richmond / Henrico, VA</span>
+      <span>📞 <a href="tel:+18042974830">(804) 297-4830</a></span>
+      <span>✉️ <a href="mailto:TAyresFilm@Gmail.Com">TAyresFilm@Gmail.Com</a></span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN NAVIGATION -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="nav-brand">Thomas<span>.</span>Ayres</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#reel">Work</a></li>
+      <li><a href="#gear">Gear & Tech</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO WITH CAMERA & EDITING GRAPHIC CARDS -->
+  <section class="hero" id="top">
+    <!-- Background Ambient Light -->
+    <div class="hero-graphic-bg"></div>
+    <div class="hero-grid-overlay"></div>
+
+    <div class="wrap">
+      <div class="hero-grid-container">
+        <!-- Hero Text Content -->
+        <div class="hero-content">
+          <div class="hero-badge">⚡ Videographer &amp; Visual Content Creator</div>
+          <h1>Capturing live energy &amp; high-stakes moments.</h1>
+          <p>Specializing in multi-camera broadcast production, athletic coverage, and high-impact social content built to engage audiences.</p>
+          <div class="hero-buttons">
+            <a href="#reel" class="btn btn-primary">Watch Reel</a>
+            <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+          </div>
+        </div>
+
+        <!-- Graphic Image Showcase Grid (Camera Rig & Editing) -->
+        <div class="hero-visual-cards">
+          <div class="hero-visual-card">
+            <img src="https://static.wixstatic.com/media/e5236c_662accb7da964200bb4757ce958d79db~mv2.jpg" alt="Cinema Camera Rig">
+            <div class="hero-visual-card-tag">📷 Sony Cinema Rig</div>
+          </div>
+          <div class="hero-visual-card">
+            <img src="https://static.wixstatic.com/media/e5236c_d707d1266a6942af9d661350ac8c7bf9~mv2.png" alt="Video Editing Suite">
+            <div class="hero-visual-card-tag">🖥️ NLE Post-Production</div>
+          </div>
+          <div class="hero-visual-card">
+            <img src="https://static.wixstatic.com/media/e5236c_f6a658389ba547c898765a37cc1867d9~mv2.jpg" alt="Color Grading Interface">
+            <div class="hero-visual-card-tag">🎨 LOG Color Grading</div>
+          </div>
+          <div class="hero-visual-card">
+            <img src="https://static.wixstatic.com/media/e5236c_3595f70495ce4c18906c952ddfd3f9c7~mv2.png" alt="Broadcast Field Camera">
+            <div class="hero-visual-card-tag">📡 Live Broadcast Tech</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SELECTED WORK -->
+  <section class="block" id="reel">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Selected Work</h2>
+        <p>Featured projects spanning athletic coverage, industrial storytelling, and live broadcasts.</p>
+      </div>
+
+      <!-- Master Reel -->
+      <div class="featured-reel">
+        <div class="featured-media video-trigger" data-video="CBQb6hLLcnM">
+          <img src="https://i.ytimg.com/vi/CBQb6hLLcnM/maxresdefault.jpg" alt="Featured Reel Thumbnail">
+          <div class="play-overlay"><div class="play-icon">▶</div></div>
+        </div>
+        <div class="featured-info">
+          <h3>2025 Master Reel</h3>
+          <p>A comprehensive highlight video showing multi-camera cinematography, LOG color grading, and field editing.</p>
+          <button class="btn btn-primary video-trigger" data-video="CBQb6hLLcnM">Play Reel Video</button>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="filter-tabs">
+        <button class="tab-btn active" data-filter="all">All Projects</button>
+        <button class="tab-btn" data-filter="creative">Selected Work</button>
+        <button class="tab-btn" data-filter="news">News Broadcasts</button>
+      </div>
+
+      <!-- Video Grid -->
+      <div class="video-grid">
+        <article class="video-card" data-category="creative">
+          <div class="card-media video-trigger" data-video="2ngvIU4PJU0">
+            <img src="https://i.ytimg.com/vi/2ngvIU4PJU0/maxresdefault.jpg" alt="#ScienceSaves submission" loading="lazy">
+            <div class="play-overlay"><div class="play-icon">▶</div></div>
+          </div>
+          <div class="card-body"><h4>#ScienceSaves Video Submission</h4></div>
+        </article>
+
+        <article class="video-card" data-category="creative">
+          <div class="card-media video-trigger" data-video="LOaGZYtazWE">
+            <img src="https://i.ytimg.com/vi/LOaGZYtazWE/maxresdefault.jpg" alt="Career Rodeo Project" loading="lazy">
+            <div class="play-overlay"><div class="play-icon">▶</div></div>
+          </div>
+          <div class="card-body"><h4>Career Rodeo Showcase</h4></div>
+        </article>
+
+        <article class="video-card" data-category="creative">
+          <div class="card-media video-trigger" data-video="2D3nh3EJG-I">
+            <img src="https://i.ytimg.com/vi/2D3nh3EJG-I/maxresdefault.jpg" alt="VCU Impact Project" loading="lazy">
+            <div class="play-overlay"><div class="play-icon">▶</div></div>
+          </div>
+          <div class="card-body"><h4>VCU Impact Project</h4></div>
+        </article>
+
+        <article class="video-card" data-category="news">
+          <div class="card-media video-trigger" data-video="8Wd_M5T_kmM">
+            <img src="https://i.ytimg.com/vi/8Wd_M5T_kmM/sddefault.jpg" alt="ACE Broadcast" loading="lazy">
+            <div class="play-overlay"><div class="play-icon">▶</div></div>
+          </div>
+          <div class="card-body"><h4>ACE Broadcast — April 14</h4></div>
+        </article>
+
+        <article class="video-card" data-category="news">
+          <div class="card-media video-trigger" data-video="txWlUu666IQ">
+            <img src="https://i.ytimg.com/vi/txWlUu666IQ/maxresdefault.jpg" alt="ACE Broadcast" loading="lazy">
+            <div class="play-overlay"><div class="play-icon">▶</div></div>
+          </div>
+          <div class="card-body"><h4>ACE Broadcast — April 15</h4></div>
+        </article>
+
+        <article class="video-card" data-category="news">
+          <div class="card-media video-trigger" data-video="6DA1SlwLzJM">
+            <img src="https://i.ytimg.com/vi/6DA1SlwLzJM/maxresdefault.jpg" alt="ACE Broadcast" loading="lazy">
+            <div class="play-overlay"><div class="play-icon">▶</div></div>
+          </div>
+          <div class="card-body"><h4>ACE Broadcast — Feb 27</h4></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- GEAR & TECH -->
+  <section class="block" id="gear">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Hardware &amp; Software Proficiencies</h2>
+        <p>Experienced in high-end camera rigs, live broadcast setups, and post-production software.</p>
+      </div>
+      <div class="gear-grid">
+        <div class="gear-card">
+          <img src="https://static.wixstatic.com/media/e5236c_662accb7da964200bb4757ce958d79db~mv2.jpg" alt="Sony FX3">
+          <div class="gear-info"><h4>Sony FX3</h4><span>Cinema Camera Body</span></div>
+        </div>
+        <div class="gear-card">
+          <img src="https://static.wixstatic.com/media/e5236c_a3de34782da84025b99b675d98b96983~mv2.jpg" alt="Blackmagic Pocket 4K">
+          <div class="gear-info"><h4>Blackmagic Pocket 4K</h4><span>Cinema Rig</span></div>
+        </div>
+        <div class="gear-card">
+          <img src="https://static.wixstatic.com/media/e5236c_d707d1266a6942af9d661350ac8c7bf9~mv2.png" alt="Adobe Premiere Pro">
+          <div class="gear-info"><h4>Adobe Premiere Pro</h4><span>NLE Editing</span></div>
+        </div>
+        <div class="gear-card">
+          <img src="https://static.wixstatic.com/media/e5236c_f6a658389ba547c898765a37cc1867d9~mv2.jpg" alt="DaVinci Resolve">
+          <div class="gear-info"><h4>DaVinci Resolve</h4><span>LOG Color Grading</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="block" id="about">
+    <div class="wrap">
+      <div class="about-grid">
+        <div class="about-text">
+          <h2>About Thomas</h2>
+          <p>I am a videographer and content creator with experience in field production, live broadcasting, and post-production workflows. Taught by industry experts in multi-camera operation, LOG footage color grading, and complete content lifecycles.</p>
+          <p>Completer Certificate recipient from the ACE Center at Hermitage TV &amp; Media Production Program and Mills E. Godwin High School graduate.</p>
+        </div>
+        <div class="about-profile">
+          <img src="https://static.wixstatic.com/media/e5236c_7a48fd8048564593b79fd48d752e776b~mv2.jpeg" alt="Thomas Ayres Profile">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="block" id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Contact Information</h2>
+        <p>Available for freelance videography, event coverage, and video editing.</p>
+      </div>
+      <div class="contact-list">
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <div><strong>Email:</strong> <a href="mailto:TAyresFilm@Gmail.Com">TAyresFilm@Gmail.Com</a></div>
+        </div>
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <div><strong>Phone:</strong> <a href="tel:+18042974830">(804) 297-4830</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- VIDEO POPUP MODAL -->
+<div class="modal" id="videoModal">
+  <div class="modal-content">
+    <button class="modal-close" id="modalClose">&times;</button>
+    <iframe id="videoFrame" width="100%" height="100%" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
+</div>
+
+<script>
+  // Mobile Nav Toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+  // Video Popup Interactivity
+  const videoModal = document.getElementById('videoModal');
+  const videoFrame = document.getElementById('videoFrame');
+  const modalClose = document.getElementById('modalClose');
+
+  document.querySelectorAll('.video-trigger').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const videoId = trigger.getAttribute('data-video');
+      videoFrame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+      videoModal.classList.add('open');
+    });
+  });
+
+  const closeModal = () => {
+    videoModal.classList.remove('open');
+    videoFrame.src = '';
+  };
+  modalClose.addEventListener('click', closeModal);
+  videoModal.addEventListener('click', (e) => { if (e.target === videoModal) closeModal(); });
+
+  // Filtering
+  const filterBtns = document.querySelectorAll('.tab-btn');
+  const videoCards = document.querySelectorAll('.video-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.getAttribute('data-filter');
+
+      videoCards.forEach(card => {
+        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
