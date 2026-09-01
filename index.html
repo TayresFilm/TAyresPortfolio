@@ -1,1 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thomas Ayres — Videographer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:        #07111F;
+    --bg-raised: #0D1B2E;
+    --line:      #1E3550;
+    --text:      #F4F8FC;
+    --text-dim:  #A8B9CC;
+    --accent:    #2F80ED;
+    --olive:     #24527A;
+    --radius:    2px;
+  }
 
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,h4{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:700;
+    line-height:0.95;
+    letter-spacing:0.005em;
+  }
+
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  section{ scroll-margin-top:84px; }
+
+  /* ---------- Skip link / accessibility ---------- */
+  .skip-link{
+    position:absolute; left:-999px; top:0;
+    background:var(--accent); color:#fff; padding:10px 16px; z-index:200;
+  }
+  .skip-link:focus{ left:12px; top:12px; }
+
+  :focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+
+  /* ---------- Nav ---------- */
+  header.nav{
+    position:sticky; top:0; z-index:100;
+    background:rgba(7,17,31,0.94);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1180px; margin:0 auto; padding:0 32px;
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .nav-name{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:800; font-size:1.25rem; letter-spacing:0.01em;
+    text-decoration:none; white-space:nowrap;
+  }
+  .nav-links{
+    display:flex; gap:28px; list-style:none;
+  }
+  .nav-links a{
+    text-decoration:none; font-size:0.94rem; color:var(--text-dim);
+    padding:4px 2px; border-bottom:2px solid transparent;
+    transition:color .15s, border-color .15s;
+  }
+  .nav-links a:hover, .nav-links a:focus-visible{ color:var(--text); border-color:var(--accent); }
+
+  .nav-toggle{
+    display:none; background:none; border:1px solid var(--line); color:var(--text);
+    width:40px; height:40px; font-size:1.2rem; cursor:pointer;
+  }
+
+  @media (max-width:760px){
+    .nav-links{
+      position:fixed; top:64px; left:0; right:0;
+      background:var(--bg); border-bottom:1px solid var(--line);
+      flex-direction:column; gap:0;
+      max-height:0; overflow:hidden; transition:max-height .25s ease;
+    }
+    .nav-links.open{ max-height:320px; }
+    .nav-links a{ display:block; padding:16px 32px; border-bottom:1px solid var(--line); border-left:2px solid transparent; }
+    .nav-links a:hover, .nav-links a:focus-visible{ border-color:transparent; border-left-color:var(--accent); }
+    .nav-toggle{ display:block; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    min-height:82vh;
+    display:flex; align-items:flex-end;
+    background:
+      linear-gradient(180deg, rgba(4,12,24,0.30) 0%, rgba(4,12,24,0.58) 55%, rgba(4,12,24,0.96) 100%),
+      url('https://static.wixstatic.com/media/84770f_974c086ee27649cab7731d8ee0c053d8~mv2.png/v1/fill/w_1920,h_1080,al_c,q_95,enc_avif,quality_auto/84770f_974c086ee27649cab7731d8ee0c053d8~mv2.png');
+    background-size:cover;
+    background-position:center 42%;
+  }
+  .hero-inner{
+    max-width:1180px; margin:0 auto; padding:0 32px 64px;
+    width:100%;
+    animation:rise .8s ease-out both;
+  }
+  @keyframes rise{
+    from{ opacity:0; transform:translateY(18px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  .hero-eyebrow{
+    color:var(--accent); font-weight:600; font-size:0.95rem; margin-bottom:14px;
+  }
+  .hero h1{
+    font-size:clamp(3rem, 9vw, 6.4rem);
+    text-transform:uppercase;
+  }
+  .hero p{
+    max-width:540px; color:var(--text-dim); font-size:1.08rem; margin-top:18px;
+  }
+  .hero-actions{ display:flex; gap:14px; margin-top:32px; flex-wrap:wrap; }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 24px; text-decoration:none;
+    font-weight:600; font-size:0.95rem;
+    border:1px solid var(--text); border-radius:var(--radius);
+    transition:background .15s, color .15s, border-color .15s;
+  }
+  .btn-solid{ background:var(--accent); border-color:var(--accent); color:#fff; }
+  .btn-solid:hover{ background:#2167C7; border-color:#2167C7; }
+  .btn-ghost{ color:var(--text); }
+  .btn-ghost:hover{ background:var(--text); color:var(--bg); }
+
+  /* ---------- Featured portfolio reel ---------- */
+  .section-kicker,.eyebrow{display:inline-block;color:var(--accent);font-weight:700;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;}
+  .featured-reel{display:grid;grid-template-columns:1.65fr .85fr;background:linear-gradient(135deg,#102944,#0B1728);border:1px solid #2A5279;box-shadow:0 18px 50px rgba(0,0,0,.22);margin-bottom:34px;overflow:hidden;border-radius:10px;}
+  .featured-reel-frame{position:relative;aspect-ratio:16/9;overflow:hidden;cursor:pointer;background:#000;}
+  .featured-reel-frame img{width:100%;height:100%;object-fit:cover;opacity:.9;transition:transform .35s,opacity .2s;}
+  .featured-reel-frame:hover img{transform:scale(1.025);opacity:1;}
+  .featured-badge{position:absolute;top:18px;left:18px;background:var(--accent);color:#fff;padding:7px 11px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;}
+  .featured-reel-copy{padding:38px;display:flex;flex-direction:column;justify-content:space-between;gap:30px;}
+  .featured-reel-copy h3{font-size:clamp(2rem,4vw,3.2rem);text-transform:uppercase;margin-bottom:16px;}
+  .featured-reel-copy p{color:var(--text-dim);max-width:38ch;font-size:1rem;}
+  .featured-reel .btn{align-self:flex-start;}
+  @media (max-width:820px){.featured-reel{grid-template-columns:1fr;}.featured-reel-copy{padding:28px;}}
+
+  /* ---------- Section headings ---------- */
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    gap:24px; margin-bottom:36px; flex-wrap:wrap;
+  }
+  .section-head h2{
+    font-size:clamp(2rem, 4.2vw, 2.9rem);
+    text-transform:uppercase;
+  }
+  .section-head p{ color:var(--text-dim); max-width:420px; font-size:0.98rem; }
+
+  section.block{ padding:96px 0; border-bottom:1px solid var(--line); }
+  .block-alt{ background:var(--bg-raised); }
+
+  .subhead{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:700; font-size:1.3rem; text-transform:uppercase;
+    color:var(--text-dim);
+    margin:56px 0 24px;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--line);
+  }
+  .subhead:first-of-type{ margin-top:0; }
+
+  /* ---------- Video grid ---------- */
+  .video-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:22px;
+  }
+  @media (max-width:900px){ .video-grid{ grid-template-columns:repeat(2, 1fr); } }
+  @media (max-width:620px){ .video-grid{ grid-template-columns:1fr; } }
+
+  .video-card{ background:var(--bg-raised); border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+  .video-frame{
+    position:relative; aspect-ratio:16/9; overflow:hidden; cursor:pointer;
+    background:#000;
+  }
+  .video-frame img{ width:100%; height:100%; object-fit:cover; opacity:0.82; transition:opacity .15s; }
+  .video-frame:hover img{ opacity:1; }
+  .video-frame iframe{ width:100%; height:100%; border:0; }
+  .play-btn{
+    position:absolute; inset:0; margin:auto; width:56px; height:56px;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(47,128,237,0.94); border-radius:50%;
+    pointer-events:none;
+  }
+  .play-btn svg{ width:20px; height:20px; fill:#fff; margin-left:3px; }
+  .video-title{ padding:16px 18px; font-size:0.95rem; font-weight:500; }
+
+  /* ---------- Photography gallery ---------- */
+  .gallery{
+    display:grid; grid-template-columns:1.3fr 1.3fr 1fr; gap:18px;
+    align-items:start;
+  }
+  @media (max-width:760px){ .gallery{ grid-template-columns:1fr; } }
+  .gallery button{
+    all:unset; cursor:pointer; display:block; border:1px solid var(--line);
+  }
+  .gallery img{ width:100%; height:100%; object-fit:cover; transition:opacity .15s; }
+  .gallery button:hover img{ opacity:0.88; }
+
+  .lightbox{
+    position:fixed; inset:0; background:rgba(6,7,6,0.94); z-index:300;
+    display:none; align-items:center; justify-content:center; padding:32px;
+  }
+  .lightbox.open{ display:flex; }
+  .lightbox img{ max-width:92vw; max-height:88vh; width:auto; }
+  .lightbox-close{
+    position:absolute; top:24px; right:32px; background:none; border:1px solid var(--text-dim);
+    color:var(--text); width:42px; height:42px; font-size:1.3rem; cursor:pointer;
+  }
+
+  /* ---------- Gear cards ---------- */
+  .gear-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:22px;
+  }
+  @media (max-width:900px){ .gear-grid{ grid-template-columns:repeat(2, 1fr); } }
+  @media (max-width:560px){ .gear-grid{ grid-template-columns:1fr; } }
+
+  .gear-card{ background:var(--bg-raised); border:1px solid var(--line); }
+  .gear-card .thumb{ aspect-ratio:4/3; overflow:hidden; background:#000; }
+  .gear-card .thumb img{ width:100%; height:100%; object-fit:cover; }
+  .gear-card .cap{ padding:16px 18px; }
+  .gear-card .cap h4{ font-size:1.05rem; font-weight:600; font-family:'IBM Plex Sans',sans-serif; text-transform:none; }
+  .gear-card .cap span{ color:var(--text-dim); font-size:0.86rem; }
+
+  .gear-feature{
+    display:grid; grid-template-columns:1fr 1fr; gap:36px; align-items:center;
+    background:var(--bg-raised); border:1px solid var(--line); margin-bottom:22px;
+  }
+  @media (max-width:760px){ .gear-feature{ grid-template-columns:1fr; } }
+  .gear-feature img{ width:100%; height:100%; object-fit:cover; aspect-ratio:1/1; }
+  .gear-feature .cap{ padding:12px 32px 12px 0; }
+  @media (max-width:760px){ .gear-feature .cap{ padding:0 28px 28px; } }
+  .gear-feature h3{ font-size:1.9rem; text-transform:uppercase; margin-bottom:8px; }
+  .gear-feature p{ color:var(--text-dim); }
+
+  /* ---------- About ---------- */
+  .about-grid{
+    display:grid; grid-template-columns:1.3fr 0.9fr; gap:56px; align-items:start;
+  }
+  @media (max-width:820px){ .about-grid{ grid-template-columns:1fr; } }
+  .about-grid p{ margin-bottom:18px; color:var(--text-dim); font-size:1.03rem; max-width:60ch; }
+  .about-media{ display:flex; gap:18px; }
+  .about-media figure{ flex:1; border:1px solid var(--line); background:var(--bg-raised); }
+  .about-media img{ width:100%; aspect-ratio:1/1; object-fit:cover; }
+  .about-media figcaption{ padding:10px 14px; font-size:0.82rem; color:var(--text-dim); }
+
+  /* ---------- Contact ---------- */
+  .contact-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;
+  }
+  @media (max-width:820px){ .contact-grid{ grid-template-columns:1fr; } }
+  .contact-list{ list-style:none; }
+  .contact-list li{
+    display:flex; align-items:center; gap:16px;
+    padding:20px 0; border-bottom:1px solid var(--line);
+  }
+  .contact-list li:first-child{ border-top:1px solid var(--line); }
+  .contact-list svg{ width:20px; height:20px; flex-shrink:0; fill:var(--accent); }
+  .contact-list a{ text-decoration:none; font-size:1.05rem; }
+  .contact-list a:hover{ color:var(--accent); }
+  .contact-list .label{ display:block; font-size:0.78rem; color:var(--text-dim); margin-bottom:2px; }
+  .contact-banner{ border:1px solid var(--line); }
+  .contact-banner img{ width:100%; }
+
+  footer{
+    padding:32px 0; text-align:center; color:var(--text-dim); font-size:0.85rem;
+  }
+</style>
+</head>
+<body>
+
+<a href="#reel" class="skip-link">Skip to content</a>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="nav-name">Thomas Ayres</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#reel">Reel</a></li>
+      <li><a href="#photography">Photography</a></li>
+      <li><a href="#gear">Gear</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Freelance videographer, Richmond VA</div>
+    <h1>Thomas Ayres</h1>
+    <p>Graduate of the ACE Center at Hermitage TV Media Production Program, shooting sports, news, and social content that keeps the energy of the moment intact.</p>
+    <div class="hero-actions">
+      <a href="#reel" class="btn btn-solid">Watch Portfolio Reel</a>
+      <a href="#contact" class="btn btn-ghost">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<main id="main">
+
+  <!-- REEL -->
+  <section class="block" id="reel">
+    <div class="wrap">
+      <div class="section-head">
+        <div><span class="section-kicker">Featured work</span><h2>Portfolio Reel</h2></div>
+        <p>Start here. A curated look at Thomas Ayres's strongest video work, followed by selected projects and broadcasts.</p>
+      </div>
+
+      <article class="featured-reel">
+        <div class="featured-reel-frame video-frame" data-video="CBQb6hLLcnM" role="button" tabindex="0" aria-label="Play Portfolio Reel Final Project">
+          <img src="https://i.ytimg.com/vi/CBQb6hLLcnM/maxresdefault.jpg" alt="Portfolio Reel Final Project thumbnail">
+          <span class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="featured-badge">Featured project</span>
+        </div>
+        <div class="featured-reel-copy"><div><span class="eyebrow">Portfolio Reel Final Project</span><h3>The work, all in one place.</h3><p>A quick showcase of video production, storytelling, sports coverage, and creative work. Watch the reel first, then explore the projects below.</p></div><a href="#selected-work" class="btn btn-solid">Explore selected work <span aria-hidden="true">↓</span></a></div>
+      </article>
+
+      <h3 class="subhead" id="selected-work">Selected projects</h3>
+      <div class="video-grid">
+        <article class="video-card">
+          <div class="video-frame" data-video="2ngvIU4PJU0" role="button" tabindex="0" aria-label="Play #ScienceSaves video submission">
+            <img src="https://i.ytimg.com/vi/2ngvIU4PJU0/maxresdefault.jpg" alt="#ScienceSaves video submission thumbnail" loading="lazy">
+            <span class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          </div>
+          <div class="video-title">#ScienceSaves video submission</div>
+        </article>
+
+        <article class="video-card">
+          <div class="video-frame" data-video="LOaGZYtazWE" role="button" tabindex="0" aria-label="Play Career Rodeo Project">
+            <img src="https://i.ytimg.com/vi/LOaGZYtazWE/maxresdefault.jpg" alt="Career Rodeo Project thumbnail" loading="lazy">
+            <span class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          </div>
+          <div class="video-title">Career Rodeo Project</div>
+        </article>
+
+        <article class="video-card">
+          <div class="video-frame" data-video="OWIuM6BAN0U" role="button" tabindex="0" aria-label="Play Entrepreneurship Day Project">
+            <img src="https://i.ytimg.com/vi/OWIuM6BAN0U/maxresdefault.jpg" alt="Entrepreneurship Day Project thumbnail" loading="lazy">
+            <span class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          </div>
+          <div class="video-title">Entrepreneurship Day Project</div>
+        </article>
+
+        <article class="video-card">
+          <div class="video-frame" data-video="Lw4zMcLshx8" role="button" tabindex="0" aria-label="Play Distracted Driving Project">
+            <img src="https://i.ytimg.com/vi/Lw4zMcLshx8/maxresdefault.jpg" alt="Distracted Driving Project thumbnail" loading="lazy">
+            <span class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          </div>
+          <div class="video-title">Distracted Driving Project</div>
+        </article>
+
+        <article class="video-card">
+          <div class="video-frame" data-video="2D3nh3EJG-I" role="button" tabindex="0" aria-label="Play VCU Impact Project">
+            <img src="https://i.ytimg.com/vi/2D3nh3EJG-I/maxresdefault.jpg" alt="VCU Impact Project thumbnail" loading="lazy">
+            <span class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          </div>
+          <div class="video-title">VCU Impact Project</div>
+        </article>
+
+        <article class="video-card">
+          <div class="video-frame" data-video="lDRCvauBghk" role="button" tabindex="0" aria-label="Play Voiceover Project">
+            <img src="https://i.ytimg.com/vi/lDRCvauBghk/maxresdefault.jpg" alt="Voiceover Project thumbnail" loading="lazy">
+            <span class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          </div>
+          <div class="video-title">Voiceover Project</div>
+        </article>
+      </div>
+
+      <h3 class="subhead">News broadcasts</h3>
+      <div class="video-grid">
+        <article class="video-card">
+          <div class="video-frame" data-video="8Wd_M5T_kmM" role="button" tabindex="0" aria-label="Play ACE News Network Announcements, April 14 2025">
+            <img src="https://i.ytimg.com/vi/8Wd_M5T_kmM/sddefault.jpg" alt="ACE News Network Announcements April 14 2025 thumbnail" loading="lazy">
+            <span class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          </div>
+          <div class="video-title">ACE News Network — April 14, 2025</div>
+        </article>
+
+        <article class="video-card">
+          <div class="video-frame" data-video="txWlUu666IQ" role="button" tabindex="0" aria-label="Play ACE News Network Announcements, April 15 2025">
+            <img src="https://i.ytimg.com/vi/txWlUu666IQ/maxresdefault.jpg" alt="ACE News Network Announcements April 15 2025 thumbnail" loading="lazy">
+            <span class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          </div>
+          <div class="video-title">ACE News Network — April 15, 2025</div>
+        </article>
+
+        <article class="video-card">
+          <div class="video-frame" data-video="6DA1SlwLzJM" role="button" tabindex="0" aria-label="Play ACE News Network Announcements, February 27 2025">
+            <img src="https://i.ytimg.com/vi/6DA1SlwLzJM/maxresdefault.jpg" alt="ACE News Network Announcements February 27 2025 thumbnail" loading="lazy">
+            <span class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          </div>
+          <div class="video-title">ACE News Network — Feb 27, 2025</div>
+        </article>
+
+        <article class="video-card">
+          <div class="video-frame" data-video="cX9dYPY7kPg" role="button" tabindex="0" aria-label="Play ACE News Network Announcements, April 30 2025">
+            <img src="https://i.ytimg.com/vi/cX9dYPY7kPg/maxresdefault.jpg" alt="ACE News Network Announcements April 30 2025 thumbnail" loading="lazy">
+            <span class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          </div>
+          <div class="video-title">ACE News Network — April 30, 2025</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTOGRAPHY -->
+  <section class="block block-alt" id="photography">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Photography</h2>
+        <p>Stills from the same events — click any image to view it larger.</p>
+      </div>
+      <div class="gallery">
+        <button type="button" data-full="https://static.wixstatic.com/media/e5236c_4de5cd93dc374d8ca499e6cc446d0d5d~mv2.jpg/v1/fill/w_1600,h_1068,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/e5236c_4de5cd93dc374d8ca499e6cc446d0d5d~mv2.jpg" aria-label="View photo larger">
+          <img src="https://static.wixstatic.com/media/e5236c_4de5cd93dc374d8ca499e6cc446d0d5d~mv2.jpg/v1/fill/w_980,h_655,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/e5236c_4de5cd93dc374d8ca499e6cc446d0d5d~mv2.jpg" alt="Event photography by Thomas Ayres" loading="lazy">
+        </button>
+        <button type="button" data-full="https://static.wixstatic.com/media/e5236c_41f327dc1c774bd8a298e50738622f9d~mv2.jpg/v1/fill/w_1600,h_1068,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/e5236c_41f327dc1c774bd8a298e50738622f9d~mv2.jpg" aria-label="View photo larger">
+          <img src="https://static.wixstatic.com/media/e5236c_41f327dc1c774bd8a298e50738622f9d~mv2.jpg/v1/fill/w_980,h_655,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/e5236c_41f327dc1c774bd8a298e50738622f9d~mv2.jpg" alt="Event photography by Thomas Ayres" loading="lazy">
+        </button>
+        <button type="button" data-full="https://static.wixstatic.com/media/e5236c_0f245069438741c1be64c52c2770870c~mv2.jpg/v1/fill/w_1200,h_1800,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/e5236c_0f245069438741c1be64c52c2770870c~mv2.jpg" aria-label="View photo larger">
+          <img src="https://static.wixstatic.com/media/e5236c_0f245069438741c1be64c52c2770870c~mv2.jpg/v1/fill/w_980,h_1470,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/e5236c_0f245069438741c1be64c52c2770870c~mv2.jpg" alt="Portrait photography by Thomas Ayres" loading="lazy">
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- GEAR -->
+  <section class="block" id="gear">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Camera experience</h2>
+        <p>Broadcast, cinema, and consumer bodies, plus the software behind every edit.</p>
+      </div>
+
+      <div class="gear-grid">
+        <article class="gear-card">
+          <div class="thumb"><img src="https://static.wixstatic.com/media/e5236c_b3ede722cfdf4548ab51124042d6c940~mv2.jpg/v1/crop/x_303,y_0,w_2400,h_2000/fill/w_600,h_450,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/e5236c_b3ede722cfdf4548ab51124042d6c940~mv2.jpg" alt="Broadcast camera setup" loading="lazy"></div>
+          <div class="cap"><h4>Hitachi broadcast cameras</h4><span>Studio &amp; ENG</span></div>
+        </article>
+        <article class="gear-card">
+          <div class="thumb"><img src="https://static.wixstatic.com/media/e5236c_3595f70495ce4c18906c952ddfd3f9c7~mv2.png/v1/fill/w_720,h_509,al_c,lg_1,q_90,enc_avif,quality_auto/e5236c_3595f70495ce4c18906c952ddfd3f9c7~mv2.png" alt="JVC HC500U camera" loading="lazy"></div>
+          <div class="cap"><h4>JVC HC500U</h4><span>ENG / field camera</span></div>
+        </article>
+        <article class="gear-card">
+          <div class="thumb"><img src="https://static.wixstatic.com/media/e5236c_8a6b1583d53b4843be3c376aec8c66a2~mv2.png/v1/fill/w_600,h_600,al_c,lg_1,q_85,enc_avif,quality_auto/e5236c_8a6b1583d53b4843be3c376aec8c66a2~mv2.png" alt="Canon XA60 camera" loading="lazy"></div>
+          <div class="cap"><h4>Canon XA60</h4><span>Compact camcorder</span></div>
+        </article>
+      </div>
+
+      <div class="gear-feature" style="margin-top:22px;">
+        <img src="https://static.wixstatic.com/media/e5236c_662accb7da964200bb4757ce958d79db~mv2.jpg/v1/fill/w_900,h_900,al_c,lg_1,q_90,enc_avif,quality_auto/sony_ilme_fx3a_fx3_full_frame_cinema_camera_1746547141_1894322.jpg" alt="Sony FX3 cinema camera" loading="lazy">
+        <div class="cap">
+          <h3>Sony FX3</h3>
+          <p>Full-frame cinema body used for narrative and higher-end campaign work.</p>
+        </div>
+      </div>
+
+      <h3 class="subhead">Consumer &amp; cinema cameras</h3>
+      <div class="gear-grid">
+        <article class="gear-card">
+          <div class="thumb"><img src="https://static.wixstatic.com/media/e5236c_a5652987ddc54c74ab1b0427248847a2~mv2.jpg/v1/fill/w_600,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/sony_alpha_a6100_mirrorless_digital_1588854151_1502814.jpg" alt="Sony a6100 camera" loading="lazy"></div>
+          <div class="cap"><h4>Sony a6100</h4><span>Mirrorless</span></div>
+        </article>
+        <article class="gear-card">
+          <div class="thumb"><img src="https://static.wixstatic.com/media/e5236c_a3de34782da84025b99b675d98b96983~mv2.jpg/v1/fill/w_600,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/blackmagic_design_pocket_cinema_camera_4k_1524046877_1401512.jpg" alt="Blackmagic Pocket Cinema Camera 4K" loading="lazy"></div>
+          <div class="cap"><h4>Blackmagic Pocket 4K</h4><span>Cinema camera</span></div>
+        </article>
+        <article class="gear-card">
+          <div class="thumb"><img src="https://static.wixstatic.com/media/e5236c_f2c640d5744f4c3db5d9a302df6691d7~mv2.jpg/v1/fill/w_600,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/canon_1263c004_eos_80d_dslr_camera_1455749513_1225875.jpg" alt="Canon EOS 80D DSLR camera" loading="lazy"></div>
+          <div class="cap"><h4>Canon EOS 80D</h4><span>DSLR</span></div>
+        </article>
+      </div>
+
+      <h3 class="subhead">Software</h3>
+      <div class="gear-grid">
+        <article class="gear-card">
+          <div class="thumb"><img src="https://static.wixstatic.com/media/e5236c_d707d1266a6942af9d661350ac8c7bf9~mv2.png/v1/fill/w_720,h_540,al_c,lg_1,q_90,enc_avif,quality_auto/e5236c_d707d1266a6942af9d661350ac8c7bf9~mv2.png" alt="Adobe Premiere Pro interface" loading="lazy"></div>
+          <div class="cap"><h4>Adobe Premiere Pro</h4><span>Editing</span></div>
+        </article>
+        <article class="gear-card">
+          <div class="thumb"><img src="https://static.wixstatic.com/media/e5236c_8fd41d8dddd642d4af24f65c8d00d463~mv2.png/v1/fill/w_824,h_540,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/Xpressions%20Capture_PNG.png" alt="Graphite Xpressions interface" loading="lazy"></div>
+          <div class="cap"><h4>Graphite Xpressions</h4><span>Broadcast graphics</span></div>
+        </article>
+        <article class="gear-card">
+          <div class="thumb"><img src="https://static.wixstatic.com/media/e5236c_d48acb782a5445c7a71863660823f869~mv2.png/v1/fill/w_824,h_540,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/photoshop.png" alt="Adobe Photoshop interface" loading="lazy"></div>
+          <div class="cap"><h4>Adobe Photoshop</h4><span>Photo &amp; graphics</span></div>
+        </article>
+        <article class="gear-card">
+          <div class="thumb"><img src="https://static.wixstatic.com/media/e5236c_f6a658389ba547c898765a37cc1867d9~mv2.jpg/v1/fill/w_824,h_540,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/DaVinci-Resolve-15-Edit.jpg" alt="DaVinci Resolve interface" loading="lazy"></div>
+          <div class="cap"><h4>DaVinci Resolve</h4><span>Color &amp; editing</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="block block-alt" id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>About</h2>
+      </div>
+      <div class="about-grid">
+        <div>
+          <p>I'm a freelance videographer with a particular pull toward sports — motorsports, horse racing, and fencing among them. Being close to live competition means learning to read a moment before it happens, so the footage carries the same energy the crowd feels.</p>
+          <p>Alongside sports work, I produce content for social platforms, from quick-turn short-form videos to full live-streamed productions, always built around what each client needs to say and who they're saying it to.</p>
+          <p>My time with Doswell Operating Group and St. David's Anglican Church shaped how I work today — both gave me room to sharpen the technical and creative sides of the job, and I'm grateful for the mentorship that came with it.</p>
+        </div>
+        <div class="about-media">
+          <figure>
+            <img src="https://static.wixstatic.com/media/e5236c_7a48fd8048564593b79fd48d752e776b~mv2.jpeg/v1/fill/w_593,h_593,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/1000002119.jpeg" alt="Headshot of Thomas Ayres" loading="lazy">
+            <figcaption>Headshot</figcaption>
+          </figure>
+          <figure>
+            <img src="https://static.wixstatic.com/media/e5236c_33d8cf30b1eb443b85b8d08090916418~mv2.png/v1/fill/w_420,h_420,al_c,lg_1,q_85,enc_avif,quality_auto/qr-code-1788268537287.png" alt="QR code linking to Thomas Ayres's contact details" loading="lazy">
+            <figcaption>Scan to connect</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="block" id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Contact</h2>
+        <p>Available for freelance shoots, event coverage, and social content — reach out any of these ways.</p>
+      </div>
+      <div class="contact-grid">
+        <ul class="contact-list">
+          <li>
+            <svg viewBox="0 0 24 24"><path d="M2 4h20v16H2V4zm2 2v.01L12 12l8-5.99V6H4zm16 2.24-7.4 5.55a1 1 0 0 1-1.2 0L4 8.24V18h16V8.24z"/></svg>
+            <span><span class="label">Email</span><a href="mailto:TAyresFilm@gmail.com">TAyresFilm@gmail.com</a></span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.2 1L6.6 10.8z"/></svg>
+            <span><span class="label">Phone</span><a href="tel:+18042974830">(804) 297-4830</a></span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24"><path d="M12 2c2.7 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.22.6 1.77 1.15.55.55.9 1.11 1.15 1.77.25.64.42 1.37.47 2.43.05 1.06.06 1.42.06 4.12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.15 1.77 4.9 4.9 0 0 1-1.77 1.15c-.64.25-1.37.42-2.43.47-1.06.05-1.42.06-4.12.06s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.77-1.15 4.9 4.9 0 0 1-1.15-1.77c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.7 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.22 1.15-1.77A4.9 4.9 0 0 1 5.45.53c.64-.25 1.37-.42 2.43-.47C8.94.01 9.3 0 12 0zm0 2.16c-2.65 0-2.99.01-4.04.06-.97.04-1.5.2-1.85.34-.46.18-.79.4-1.14.75s-.57.68-.75 1.14c-.14.35-.3.88-.34 1.85-.05 1.05-.06 1.39-.06 4.04s.01 2.99.06 4.04c.04.97.2 1.5.34 1.85.18.46.4.79.75 1.14s.68.57 1.14.75c.35.14.88.3 1.85.34 1.05.05 1.39.06 4.04.06s2.99-.01 4.04-.06c.97-.04 1.5-.2 1.85-.34.46-.18.79-.4 1.14-.75s.57-.68.75-1.14c.14-.35.3-.88.34-1.85.05-1.05.06-1.39.06-4.04s-.01-2.99-.06-4.04c-.04-.97-.2-1.5-.34-1.85a3.1 3.1 0 0 0-.75-1.14 3.1 3.1 0 0 0-1.14-.75c-.35-.14-.88-.3-1.85-.34-1.05-.05-1.39-.06-4.04-.06zm0 3.68a6.16 6.16 0 1 1 0 12.32 6.16 6.16 0 0 1 0-12.32zm0 2.16a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm6.4-2.4a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/></svg>
+            <span><span class="label">Instagram</span><a href="https://instagram.com/TommyTakesPhotoss" target="_blank" rel="noopener">@TommyTakesPhotoss</a></span>
+          </li>
+        </ul>
+        <div class="contact-banner">
+          <img src="https://static.wixstatic.com/media/e5236c_6754248d5b684bd5a777caa8d2505d6b~mv2.png/v1/fill/w_659,h_297,al_c,lg_1,q_85,enc_avif,quality_auto/e5236c_6754248d5b684bd5a777caa8d2505d6b~mv2.png" alt="Thomas Ayres contact banner" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">© 2025 Thomas Ayres. All rights reserved.</div>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close image">✕</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<script>
+  // Mobile nav toggle
+  var navToggle = document.getElementById('navToggle');
+  var navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', function(){
+    var open = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open);
+  });
+  navLinks.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Click-to-play video embeds
+  document.querySelectorAll('.video-frame').forEach(function(frame){
+    function play(){
+      var id = frame.getAttribute('data-video');
+      frame.innerHTML = '<iframe src="https://www.youtube.com/embed/' + id +
+        '?autoplay=1&rel=0" title="Video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    }
+    frame.addEventListener('click', play);
+    frame.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); play(); }
+    });
+  });
+
+  // Lightbox
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  document.querySelectorAll('.gallery button').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      lightboxImg.src = btn.getAttribute('data-full');
+      lightboxImg.alt = btn.querySelector('img').alt;
+      lightbox.classList.add('open');
+    });
+  });
+  function closeLightbox(){ lightbox.classList.remove('open'); lightboxImg.src=''; }
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function(e){ if(e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLightbox(); });
+</script>
+
+</body>
+</html>
